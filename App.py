@@ -1,25 +1,24 @@
 import random
-
 import streamlit as st
 
 
 def run():
-    st.set_page_config(page_title="Generator równań")
+    st.set_page_config(page_title="Equation generator")
 
-    st.sidebar.header("Jakie równania chcesz generować")
+    st.sidebar.header("Choose equation type")
     st.sidebar.markdown("---")
     radio_format = {"fillcolor": 'red', 'color': 'blue', 'weight': 2, 'font_family': 'courier new',
                     'font-weight': 'bold', 'padding': '2px'}
 
     rodzaj_rownania = st.sidebar.radio(
-        "Wybierz rodzaj równania",
-        ('Równanie', 'Równanie z ułamkami', 'Układ równań', "Układ równań z ułamkami"))
-    par = st.sidebar.number_input("Parametr", min_value=2, max_value=9, step=1)
-    par_w = st.sidebar.number_input("Wyraz wolny", min_value=1, max_value=50, step=1)
-    number = st.sidebar.number_input("Ilość równań", min_value=1, max_value=100, step=1)
+        "Choose equation type",
+        ('Integer', 'Fractions', 'Set of equations with integers', "Set of equations with fractions"))
+    par = st.sidebar.number_input("Parameter", min_value=2, max_value=9, step=1)
+    par_w = st.sidebar.number_input("Free parameter", min_value=1, max_value=50, step=1)
+    number = st.sidebar.number_input("Count", min_value=1, max_value=100, step=1)
     # parametr=st.sidebar.number_input("Parametr k", min_value=0, max_value=100,  step=1)
     z = st.container()
-    z.title("Wyniki")
+    z.title("Output")
 
     def random_number(l: int, k: int) -> int:
         x = random.randint(l, k)
@@ -41,12 +40,12 @@ def run():
 
     def wynik():
         z.empty()
-        if rodzaj_rownania == 'Równanie':
+        if rodzaj_rownania == 'Integer':
             for a in range(number):
                 with z:
                     st.latex(
                         rf'''{random_symbol_p()}{random_number(2, par)}x{random_symbol()}{random_number(1, par_w)}={random_symbol_p()}{random_number(2, par)}x{random_symbol()}{random_number(1, par_w)}''')
-        elif rodzaj_rownania == 'Równanie z ułamkami':
+        elif rodzaj_rownania == 'Fractions':
             for a in range(number):
                 with z:
                     if random_from_list([0, 1, 2, 3, 4, 5, 6]) == 0:
@@ -71,13 +70,13 @@ def run():
                         st.latex(
                             rf'''{random_symbol_p()}\frac{random_number(1, par)}{random_number(2, par)}\left(x\right){random_symbol()}\frac{random_number(1, par)}{random_number(2, par)}={random_number(1, par)}x{random_symbol()}{random_number(1, par_w)}''')
 
-        elif rodzaj_rownania == 'Układ równań':
+        elif rodzaj_rownania == 'Set of equations with integers':
             for a in range(number):
                 with z:
                     st.latex(
                         r'''\left\{\begin{matrix}''' + rf'''{random_symbol_p()}{random_number(1, par)}x{random_symbol()}{random_number(1, par)}y{random_symbol()}{random_number(1, par_w)}=0 \\ {random_symbol_p()}{random_number(1, par)}x{random_symbol()}{random_number(1, par)}y{random_symbol()}{random_number(1, par_w)}=0 ''' + r'''\end{matrix}\right.''')
 
-        elif rodzaj_rownania == "Układ równań z ułamkami":
+        elif rodzaj_rownania == "Set of equations with fractions":
             for a in range(number):
                 with z:
                     if random_from_list([0, 1, 2, 3, 4, 5]) == 0:
@@ -107,7 +106,7 @@ def run():
     }
     </style>""", unsafe_allow_html=True)
 
-    st.sidebar.button(label="Pokaż wynik", on_click=wynik)
+    st.sidebar.button(label="Show output", on_click=wynik)
 
 
 if __name__ == "__main__":
