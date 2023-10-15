@@ -1,6 +1,24 @@
 import random
 import streamlit as st
 
+def random_number(l: int, k: int) -> int:
+    x = random.randint(l, k)
+    return x
+
+def random_symbol() -> str:
+    lista = ['+', '-']
+    x = random.choice(lista)
+    return x
+
+def random_symbol_p() -> str:
+    lista = ['', '-']
+    x = random.choice(lista)
+    return x
+
+def random_from_list(lista: list) -> int:
+    x = random.choice(lista)
+    return x
+
 
 def run():
     st.set_page_config(page_title="Equation generator")
@@ -20,23 +38,7 @@ def run():
     z = st.container()
     z.title("Output")
 
-    def random_number(l: int, k: int) -> int:
-        x = random.randint(l, k)
-        return x
 
-    def random_symbol() -> str:
-        lista = ['+', '-']
-        x = random.choice(lista)
-        return x
-
-    def random_symbol_p() -> str:
-        lista = ['', '-']
-        x = random.choice(lista)
-        return x
-
-    def random_from_list(lista: list) -> int:
-        x = random.choice(lista)
-        return x
 
     def wynik():
         z.empty()
